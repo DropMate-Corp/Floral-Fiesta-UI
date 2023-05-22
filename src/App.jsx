@@ -7,6 +7,7 @@ import {
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Purchase from "./pages/Purchase";
 
 import { CartProvider } from "./components/Cart/CartContext";
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
+  {
+    path: "/purchase",
+    element: <Purchase />,
+  }
 ]);
 
 function App() {

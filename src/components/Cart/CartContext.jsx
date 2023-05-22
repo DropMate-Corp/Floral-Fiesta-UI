@@ -1,9 +1,15 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect } from 'react';
 
 export const CartContext = createContext();
 
 const cartReducer = (state, action) => {
   switch (action.type) {
+    case 'SET_CART':
+      return {
+        ...state,
+        items: action.payload,
+      };
+
     case 'ADD_TO_CART':
       // Check if the item already exists in the cart
       const existingItem = state.items.find((item) => item.id === action.payload.id);
@@ -79,6 +85,21 @@ const cartReducer = (state, action) => {
 
 export const CartProvider = ({ children }) => {
   const [cartState, dispatch] = useReducer(cartReducer, { items: [] });
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+      dispatch({ type: 'SET_CART', payload: JSON.parse(storedCart) });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (cartState.items.length === 0) {
+      localStorage.removeItem('cart');
+    } else {
+      localStorage.setItem('cart', JSON.stringify(cartState.items));
+    }
+  }, [cartState.items]);
 
   return (
     <CartContext.Provider value={{ cartState, dispatch }}>
