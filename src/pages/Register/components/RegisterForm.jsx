@@ -39,35 +39,33 @@ export default function RegisterForm() {
         setConfirmPassword(e.target.value);
     }
 
-    // Form Submission
     const handleSubmit = (e) => {
+        e.preventDefault();
         const form = e.currentTarget;
-
-        const valid = false;
+      
         if (form.checkValidity() === false) {
-            e.preventDefault();
-            e.stopPropagation();
+          e.stopPropagation();
+          setValidated(true); // Show validation errors
+          return;
         }
-
+      
         if (password !== confirmPassword) {
-            alert("Passwords do not match");
-            return;
-        } else {
-            valid = true;
-            setValidated(true);
+          alert("Passwords do not match");
+          return;
         }
-
-        console.log('Name: ', name);
-        console.log('Email: ', email);
-        console.log('Phone Number: ', phoneNumber);
-        console.log('Address: ', address);
-        console.log('Password: ', password);
-
-        if (valid) {
-            navigate("/login");
-        }
-    
-    }
+      
+        // Form data is valid, proceed with registration
+        console.log('Name:', name);
+        console.log('Email:', email);
+        console.log('Phone Number:', phoneNumber);
+        console.log('Address:', address);
+        console.log('Password:', password);
+      
+        // Perform registration logic here (e.g., API call, registration service)
+      
+        // Assuming registration is successful, navigate to the login page
+        navigate('/login');
+      };      
 
     return (
         <>

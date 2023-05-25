@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faShoppingCart, faBagShopping } from '@fortawesome/free-solid-svg-icons';
 import Cart from '../Cart';
 import {CartContext} from '../Cart/CartContext';
 
@@ -35,6 +35,11 @@ function BasicExample() {
             <div className="navbar-text">
               {loggedIn ? (
                 <Row className="align-items-center">
+                  <Col xs="auto">
+                    <Link to="/tracking">
+                      <FontAwesomeIcon icon={faBagShopping} />
+                    </Link>
+                  </Col>
                   <Col xs="auto">
                     <button className="btn" onClick={handleCartToggle}>
                       <FontAwesomeIcon icon={faShoppingCart} />

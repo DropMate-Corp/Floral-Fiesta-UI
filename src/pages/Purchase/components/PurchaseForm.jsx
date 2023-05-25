@@ -4,7 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { CartContext } from '../../../components/Cart/CartContext';
 
-const PurchaseForm = () => {
+const PurchaseForm = ({ setFormData }) => {
   const [validated, setValidated] = useState(false);
   const [name, setName] = useState('');
   const [address, setAddress] = useState('');
@@ -36,9 +36,18 @@ const PurchaseForm = () => {
   };
 
   const handleFormSubmit = (e) => {
+    e.preventDefault();
+
     if (e.currentTarget.checkValidity() === false) {
-      e.preventDefault();
       e.stopPropagation();
+    } else {
+      setFormData({
+        name,
+        address,
+        contactInfo,
+        deliveryMethod,
+        selectedLocation,
+      });
     }
 
     setValidated(true);
@@ -49,6 +58,7 @@ const PurchaseForm = () => {
     setDeliveryMethod('deliverHome');
     setSelectedLocation('');
   };
+
 
   return (
     <Card className="p-4">

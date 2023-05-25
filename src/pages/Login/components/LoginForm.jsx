@@ -25,26 +25,25 @@ export default function LoginForm() {
 
     // Form Submission
     const handleSubmit = (e) => {
+        e.preventDefault();
         const form = e.currentTarget;
+
         if (form.checkValidity() === false) {
-            e.preventDefault();
             e.stopPropagation();
-        }
+            setValidated(true); // Show validation errors
+        } else {
+            // Form is valid, proceed with login
+            console.log('Email:', email);
+            console.log('Password:', password);
 
-        const valid = true;
-        setValidated(valid);
+            // Perform authentication logic here (e.g., API call, authentication service)
 
-        console.log('Email: ', email);
-        console.log('Password: ', password);
-
-        if (valid) {
-            // Set Log in Local Storage
+            // Assuming login is successful, set logged-in state and redirect to Home
             localStorage.setItem('loggedIn', true);
-
-            // Redirect to Home
-            navigate("/");
+            navigate('/');
         }
-    }
+    };
+
 
     return (
         <>

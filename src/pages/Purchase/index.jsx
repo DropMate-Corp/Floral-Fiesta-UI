@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Bootstrap
@@ -12,6 +12,7 @@ import CartItem from '../../components/Cart/CartItem';
 import { CartContext } from '../../components/Cart/CartContext';
 import BasicExample from '../../components/Navbar';
 import PurchaseForm from './components/PurchaseForm';
+import ConfirmPurchaseModal from './components/ConfirmPurchaseModal';
 
 const Purchase = () => {
   const navigate = useNavigate();
@@ -39,17 +40,48 @@ const Purchase = () => {
       style: 'currency',
       currency: 'EUR',
     }).format(price);
-  
+
     const euroSymbol = '\u20AC'; // Euro symbol
-  
+
     return formattedPrice.replace('€', '') + euroSymbol;
   };
-  
+
   const calculateTotal = () => {
     return cartState.items.reduce(
       (total, item) => total + parseFloat(item.price * item.quantity),
       0
     );
+  };
+
+  // Confirmation Modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleFormSubmit = (formData) => {
+    const { name, address, contactInfo, deliveryMethod, selectedLocation } = formData;
+
+    const order = {
+      name,
+      address,
+      contactInfo,
+      deliveryMethod,
+      selectedLocation,
+      items: cartState.items,
+    };
+
+    console.log(order);
+    
+    // Show confirmation modal
+    handleShow();
+
+    // Clear cart
+    handleClearCart();
+
+    // Redirect to home page after sleeping for 5 seconds
+    setTimeout(() => {
+      navigate('/');
+    }, 1000);
   };
 
   return (
@@ -86,11 +118,12 @@ const Purchase = () => {
           <Col xs={12} md={1}></Col>
           <Col xs={12} md={5}>
             <div>
-              <PurchaseForm />
+              <PurchaseForm setFormData={(formData) => handleFormSubmit(formData)} />
             </div>
           </Col>
         </Row>
       </Container>
+      <ConfirmPurchaseModal show={show} handleClose={handleClose} />
     </>
   );
 };
