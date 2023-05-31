@@ -12,12 +12,12 @@ const cartReducer = (state, action) => {
 
     case 'ADD_TO_CART':
       // Check if the item already exists in the cart
-      const existingItem = state.items.find((item) => item.id === action.payload.id);
+      const existingItem = state.items.find((item) => item.plantId === action.payload.plantId);
 
       if (existingItem) {
         // If the item exists, update its quantity
         const updatedItems = state.items.map((item) => {
-          if (item.id === action.payload.id) {
+          if (item.plantId === action.payload.plantId) {
             return {
               ...item,
               quantity: item.quantity + 1,
@@ -41,14 +41,14 @@ const cartReducer = (state, action) => {
     case 'REMOVE_FROM_CART':
       return {
         ...state,
-        items: state.items.filter((item) => item.id !== action.payload),
+        items: state.items.filter((item) => item.plantId !== action.payload),
       };
 
     case 'INCREASE_QUANTITY':
       return {
         ...state,
         items: state.items.map((item) => {
-          if (item.id === action.payload) {
+          if (item.plantId === action.payload) {
             return {
               ...item,
               quantity: item.quantity + 1,
@@ -62,7 +62,7 @@ const cartReducer = (state, action) => {
       return {
         ...state,
         items: state.items.map((item) => {
-          if (item.id === action.payload) {
+          if (item.plantId === action.payload) {
             return {
               ...item,
               quantity: item.quantity - 1,

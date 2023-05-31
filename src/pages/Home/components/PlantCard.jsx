@@ -7,12 +7,12 @@ import { CartContext } from '../../../components/Cart/CartContext';
 
 export default function PlantCard({ plant }) {
   const navigate = useNavigate();
-  const loggedIn = localStorage.getItem('loggedIn');
+  const user = JSON.parse(localStorage.getItem('user'));
   const { dispatch } = useContext(CartContext);
   const [showModal, setShowModal] = useState(false);
 
   const handleAddToCart = () => {
-    if (!loggedIn) {
+    if (!user) {
       navigate('/login');
     } else {
       dispatch({ type: 'ADD_TO_CART', payload: plant });
@@ -31,7 +31,7 @@ export default function PlantCard({ plant }) {
 
   return (
     <Card style={{ width: '18rem' }} className="d-flex flex-column h-100">
-      <Card.Img variant="top" src={plant.photo} />
+      <Card.Img variant="top" src={plant.photo} style={{height: 250}}/>
       <Card.Body className="d-flex flex-column">
         <Card.Title>{plant.name}</Card.Title>
         <Card.Text>{plant.description}</Card.Text>

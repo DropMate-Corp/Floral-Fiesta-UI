@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // Bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 
-export default function LoginForm() {
-    const navigate = useNavigate();
-
+export default function LoginForm({ handleLogin }) {
     // Form
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -37,10 +34,7 @@ export default function LoginForm() {
             console.log('Password:', password);
 
             // Perform authentication logic here (e.g., API call, authentication service)
-
-            // Assuming login is successful, set logged-in state and redirect to Home
-            localStorage.setItem('loggedIn', true);
-            navigate('/');
+            handleLogin(email, password);
         }
     };
 

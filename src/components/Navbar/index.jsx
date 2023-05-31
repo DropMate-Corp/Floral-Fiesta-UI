@@ -13,11 +13,11 @@ import {CartContext} from '../Cart/CartContext';
 function BasicExample() {
   const navigate = useNavigate();
   const [showCart, setShowCart] = useState(false);
-  const loggedIn = localStorage.getItem('loggedIn');
+  const user = JSON.parse(localStorage.getItem('user'));
   const { cartState } = useContext(CartContext);
 
   const handleLogout = () => {
-    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('user');
     navigate('/');
   };
 
@@ -33,7 +33,7 @@ function BasicExample() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
             <div className="navbar-text">
-              {loggedIn ? (
+              {user ? (
                 <Row className="align-items-center">
                   <Col xs="auto">
                     <Link to="/tracking">

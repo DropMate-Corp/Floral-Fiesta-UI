@@ -34,7 +34,7 @@ export default function PlantsContainer({ plants }) {
     <>
       <Row>
         {currentPlants.map((plant) => (
-          <Col key={plant.id} xs={12} sm={6} md={4} lg={4} className="mb-4">
+          <Col key={plant["plantId"]} xs={12} sm={6} md={4} lg={4} className="mb-4">
             <PlantCard plant={plant} />
           </Col>
         ))}

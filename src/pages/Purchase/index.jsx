@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Bootstrap
@@ -14,8 +14,27 @@ import BasicExample from '../../components/Navbar';
 import PurchaseForm from './components/PurchaseForm';
 import ConfirmPurchaseModal from './components/ConfirmPurchaseModal';
 
+// Services
+import {
+  getAllACPs,
+  createOrder,
+} from '../../services/PurchaseService';
+
 const Purchase = () => {
   const navigate = useNavigate();
+
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  const [allACP, setAllACP] = useState([]);
+
+  const fetchAllACP = async () => {
+    const allACP = await getAllACPs();
+    setAllACP(allACP);
+  };
+
+  useEffect(() => {
+    fetchAllACP();
+  }, []);
 
   const { cartState, dispatch } = useContext(CartContext);
 
@@ -58,27 +77,34 @@ const Purchase = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleFormSubmit = (formData) => {
-    const { name, address, contactInfo, deliveryMethod, selectedLocation } = formData;
+  const handleFormSubmit = async (formData) => {
+    const { acpId } = formData;
 
     const order = {
-      name,
-      address,
-      contactInfo,
-      deliveryMethod,
-      selectedLocation,
-      items: cartState.items,
+      acpID: parseInt(acpId),
+      userId: user.userId,
+      totalPrice: calculateTotal(),
+      plantQuantityMap: cartState.items.reduce((map, item) => {
+        map[item.plantId] = item.quantity;
+        return map;
+      }, {})
     };
 
     console.log(order);
+
+    const response = await createOrder(order);
+    if (response.status !== 200) {
+      alert('Something went wrong. Please try again.');
+      return;
+    }
     
-    // Show confirmation modal
+    //Show confirmation modal
     handleShow();
 
-    // Clear cart
+    //Clear cart
     handleClearCart();
 
-    // Redirect to home page after sleeping for 5 seconds
+    //Redirect to home page after sleeping for 5 seconds
     setTimeout(() => {
       navigate('/');
     }, 1000);
@@ -118,7 +144,7 @@ const Purchase = () => {
           <Col xs={12} md={1}></Col>
           <Col xs={12} md={5}>
             <div>
-              <PurchaseForm setFormData={(formData) => handleFormSubmit(formData)} />
+              <PurchaseForm setFormData={(formData) => handleFormSubmit(formData)} allACP={allACP}/>
             </div>
           </Col>
         </Row>

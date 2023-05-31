@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const PLANT_TYPES = [
-  { id: 1, name: 'Flower' },
-  { id: 2, name: 'Fruit' },
-  { id: 3, name: 'Herb' },
-  { id: 4, name: 'Vegetable' },
-];
-
-export default function SearchForm({ searchSubmit }) {
+export default function SearchForm({ searchSubmit, categories }) {
   const [plantName, setPlantName] = useState('');
   const [plantType, setPlantType] = useState('');
+
+  const [plantTypes, setPlantTypes] = useState([]);
+
+  useEffect(() => {
+    setPlantTypes(categories);
+  }, [categories]);
 
   const handleSearchChange = (e) => {
     setPlantName(e.target.value);
@@ -59,9 +58,9 @@ export default function SearchForm({ searchSubmit }) {
         </Col>
         <Col xs={12} md={4} lg={3}>
           <Form.Select aria-label="plantType" onChange={handleTypeChange}>
-            <option>Plant Category</option>
-            {PLANT_TYPES.map((type) => (
-              <option key={type.id} value={type.name}>
+            <option value="">Plant Category</option>
+            {plantTypes && plantTypes.map((type) => (
+              <option key={type.categoryId} value={type.categoryId}>
                 {type.name}
               </option>
             ))}

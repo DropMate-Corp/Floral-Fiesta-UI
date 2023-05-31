@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 
-export default function RegisterForm() {
+export default function RegisterForm({handleRegister}) {
     const navigate = useNavigate();
 
     // Form
@@ -62,9 +62,7 @@ export default function RegisterForm() {
         console.log('Password:', password);
       
         // Perform registration logic here (e.g., API call, registration service)
-      
-        // Assuming registration is successful, navigate to the login page
-        navigate('/login');
+        handleRegister({name, email, phoneNumber, address, password});
       };      
 
     return (
