@@ -50,7 +50,7 @@ export default function CartItem({ item, handleRemoveFromCart, handleIncreaseQua
                             <Button
                                 variant="danger"
                                 size="sm"
-                                onClick={() => handleRemoveFromCart(item.id)}
+                                onClick={() => handleRemoveFromCart(item.plantId)}
                             >
                                 Remove
                             </Button>
@@ -60,7 +60,7 @@ export default function CartItem({ item, handleRemoveFromCart, handleIncreaseQua
                                 <Button
                                     variant="secondary"
                                     size="sm"
-                                    onClick={() => handleDecreaseQuantity(item.id)}
+                                    onClick={() => handleDecreaseQuantity(item.plantId)}
                                     disabled={item.quantity === 1}
                                     style={{ marginRight: '0.5rem' }}
                                 >
@@ -70,7 +70,7 @@ export default function CartItem({ item, handleRemoveFromCart, handleIncreaseQua
                                 <Button
                                     variant="secondary"
                                     size="sm"
-                                    onClick={() => handleIncreaseQuantity(item.id)}
+                                    onClick={() => handleIncreaseQuantity(item.plantId)}
                                     style={{ marginLeft: '0.5rem' }}
                                 >
                                     +
