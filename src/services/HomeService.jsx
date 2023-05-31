@@ -10,14 +10,15 @@ const header = {
 };
 
 const getAllPlants = async () => {
-    const response = await axios.get(plantURI + '/all', header);
+    const response = await axios.get(plantURI + '/all', { ...header });
     return response.data;
 }
 
 const getAllCategories = async () => {
-    const response = await axios.get(categoryURI + '/all', header);
+    const response = await axios.get(categoryURI + '/all', { ...header });
     return response.data;
 }
+
 
 export {
     getAllPlants,
