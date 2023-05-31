@@ -3,15 +3,9 @@ import axios from 'axios';
 const orderURI = import.meta.env.VITE_FLORALFIESTA_API_URI + '/order';
 const acpURI = import.meta.env.VITE_FLORALFIESTA_API_URI + '/acp';
 
-const header = {
-    headers: {
-        'Content-Type': 'application/json',
-    },
-};
-
 const getAllACPs = async () => {
     try {
-        const response = await axios.get(acpURI + '/all', { ...header });
+        const response = await axios.get(acpURI + '/all');
         return response.data;
     } catch (error) {
         console.error(error);
@@ -21,7 +15,7 @@ const getAllACPs = async () => {
 const createOrder = async (order) => {
     let response;
     try {
-        response = await axios.post(orderURI + '/create', order, { ...header });
+        response = await axios.post(orderURI + '/create', order);
     } catch (error) {
         response = error.response;
     }
@@ -29,12 +23,12 @@ const createOrder = async (order) => {
 }
 
 const getOngoingOrders = async (userId) => {
-    const response = await axios.get(`${orderURI}/ongoing/${userId}`, { ...header });
+    const response = await axios.get(`${orderURI}/ongoing/${userId}`);
     return response.data;
 };
 
 const getDeliveredOrders = async (userId) => {
-    const response = await axios.get(`${orderURI}/delivered/${userId}`, { ...header });
+    const response = await axios.get(`${orderURI}/delivered/${userId}`);
     return response.data;
 };
 
