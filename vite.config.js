@@ -5,8 +5,7 @@ import dotenv from 'dotenv'
 dotenv.config(); // Load environment variables from .env
 
 export default ({ mode }) => {
-  const isDev = mode === 'development';
-  const base = isDev ? '/' : '/Floral-Fiesta-UI/';
+  const base = '/Floral-Fiesta-UI/';
 
   return defineConfig({
     base,

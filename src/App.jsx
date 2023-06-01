@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <Tracking />,
   }
 ],
-{ basename: import.meta.env.DEV ? '/' : '/Floral-Fiesta-UI/' }
+{ basename: '/Floral-Fiesta-UI/' }
 );
 
 function App() {
